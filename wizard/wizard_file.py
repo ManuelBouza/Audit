@@ -44,7 +44,7 @@ class RuleWizard(models.TransientModel):
         if context and context.get('generator_id', False):
             generator_id = context.get('generator_id')
             generator_id = int(generator_id)
-            name = self.model1.model+' - '+self.fields1.name + ' ' + self.operator.symbol+ ' '+ self.value1
+            name = self.model1.model+', ' + self.fields1.name + ', ' + self.operator.symbol+ ', ' + self.value1
             self.env['string.converter'].create({
                 'generator_id': generator_id,
                 'name': name,
@@ -59,7 +59,7 @@ class RuleWizard(models.TransientModel):
             stringconverter = context.get('stringconverter')
             stringconverter = int(stringconverter)
 
-            name = self.model1.model + ' - ' + self.fields1.name + ' ' + self.operator.symbol + ' ' + self.value1
+            name = self.model1.model+', ' + self.fields1.name + ', ' + self.operator.symbol+ ', ' + self.value1
             self.env['string.converter'].browse(stringconverter).write({'name': name})
 
 class BinaryOperatorWizard(models.TransientModel):
@@ -68,6 +68,7 @@ class BinaryOperatorWizard(models.TransientModel):
     # Operator
     operator = fields.Many2one(comodel_name='binary.operators', string='Operador')
 
+    #TODO Refactorizar la funcion de create y de converter
     @api.multi
     def create_operator(self):  #para crear la regla, necesito recibir en el context el generator id para le realcion entre many2one
         context = self.env.context
@@ -77,7 +78,7 @@ class BinaryOperatorWizard(models.TransientModel):
             symbol = self.operator.symbol
             self.env['string.converter'].create({
                 'generator_id': generator_id,
-                'symbol': symbol,
+                'name': symbol,
                 'is_rule': False,
             })
         return True

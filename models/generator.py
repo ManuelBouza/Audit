@@ -82,15 +82,15 @@ class stringConverter(models.Model):
 
         if is_rule:
             name = self.name
-            split = name.split(',')
+            split = name.split(', ')
             model = split[0]
             model = self.env['ir.model'].search([('model','=',model)], limit=1)
             if model:
-                fields = split[2]
+                fields = split[1]
                 fields = self.env['ir.model.fields'].search([('model_id', '=', model.id),('name','=',fields)], limit=1)
-                operator = split[3]
+                operator = split[2]
                 operator = self.env['operators'].search([('symbol', '=', operator)], limit=1)
-                value1 = split[4]
+                value1 = split[3]
                 self.ensure_one()
                 wiz = self.env['rule.wizard'].create({'model1':model.id,
                                                       'fields1':fields.id,
