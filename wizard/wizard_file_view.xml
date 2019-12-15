@@ -13,7 +13,13 @@
                     <group string="Comparaciones">
                       <field name="fields1" widget="selection" domain="[('model_id', '=', model1)]"/>
                       <field name="operator" widget="selection"/>
-                      <field name="value1" />
+                      <field name="value1"  />
+                      <field name="date_value" attrs="{'invisible': [('value1', '!=', 'date')]}" />
+                      <field name="date_time_value"  attrs="{'invisible': [('value1', '!=', 'datetime')]}"/>
+                      <field name="interger_value"  attrs="{'invisible': [('value1', '!=', 'integer')]}"/>
+                      <field name="bool_value"  attrs="{'invisible': [('value1', '!=', 'boolean')]}"/>
+                      <field name="char_value"  attrs="{'invisible': [('value1', '!=', 'char')]}"/>
+                      <field name="float_value" attrs="{'invisible': [('value1', '!=', 'float')]}" />
                     </group>
                     <footer>
                         <button name="create_rule" string="Crear Regla" type="object"

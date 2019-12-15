@@ -1,23 +1,4 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2015 Akretion (<http://www.akretion.com>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 
 from openerp import models, fields, api, osv
 
@@ -35,7 +16,38 @@ class RuleWizard(models.TransientModel):
     operator = fields.Many2one(comodel_name='operators', string='Operador 1')
 
     # Campo 1 de la restriccion 1
-    value1 = fields.Char(string="Valor 1")
+    value1 = fields.Char()
+
+    date_value = fields.Date(
+        string='Date',
+        required=False)
+
+    date_time_value = fields.Datetime(
+        string='Date_time_value',
+        required=False)
+
+    interger_value = fields.Integer(
+        string='Interger_value',
+        required=False)
+
+    bool_value = fields.Boolean(
+        string='Bool_value',
+        required=False)
+
+    char_value = fields.Char(
+        string='Char_value',
+        required=False)
+
+    float_value = fields.Float(
+        string='Float_value',
+        required=False)
+
+
+    @api.onchange('fields1')
+    def onchange_method(self):
+        self.value1 = self.fields1.ttype
+
+
 
 
     @api.multi
