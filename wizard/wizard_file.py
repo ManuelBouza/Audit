@@ -74,10 +74,10 @@ class BinaryOperatorWizard(models.TransientModel):
         if context and context.get('generator_id', False):
             generator_id = context.get('generator_id')
             generator_id = int(generator_id)
-            name = self.operator.name
+            symbol = self.operator.symbol
             self.env['string.converter'].create({
                 'generator_id': generator_id,
-                'name': name,
+                'symbol': symbol,
                 'is_rule': False,
             })
         return True
@@ -89,5 +89,5 @@ class BinaryOperatorWizard(models.TransientModel):
             stringconverter = context.get('stringconverter')
             stringconverter = int(stringconverter)
 
-            name = self.model1.model + ' - ' + self.fields1.name + ' ' + self.operator.symbol + ' ' + self.value1
-            self.env['string.converter'].browse(stringconverter).write({'name': name})
+            symbol = self.operator.symbol
+            self.env['string.converter'].browse(stringconverter).write({'name': symbol})

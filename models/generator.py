@@ -71,54 +71,57 @@ class stringConverter(models.Model):
     _name = 'string.converter'
     _order = 'sequence'
 
-    generator_id = fields.Many2one(comodel_name='generator', required=True)
+    generator_id = fields.Many2one(comodel_name='generator', required=True, ondelete='cascade')
     name = fields.Char(string='Nombre')
     sequence =fields.Integer('Secuencia', default=0)
-    is_rule = fields.Boolean(
-        string='Is_rule', default='True')
+    is_rule = fields.Boolean(string='Is_rule', default='True')
 
     @api.multi
-    def edit_rule(self):
-        name = self.name
-        split = name.split(' ')
-        model = split[0]
-        model = self.env['ir.model'].search([('model','=',model)], limit=1)
-        if model:
-            fields = split[2]
-            fields = self.env['ir.model.fields'].search([('model_id', '=', model.id),('name','=',fields)], limit=1)
-            operator = split[3]
-            operator = self.env['operators'].search([('symbol', '=', operator)], limit=1)
-            value1 = split[4]
-            self.ensure_one()
-            wiz = self.env['rule.wizard'].create({'model1':model.id,
-                                                  'fields1':fields.id,
-                                                  'operator':operator.id,
-                                                  'value1':value1})
-            return {
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'rule.wizard',
-                'res_id': wiz.id,
-                'type': 'ir.actions.act_window',
-                'target': 'new',
-                'context': {'generator_id': False, 'stringconverter':self.id},
-                'nodestroy': True,
-            }
-        pass
+    def edit(self):
+        is_rule = self.is_rule
 
-    @api.multi
-    def edit_operator(self):
-        # name = self.name
-        #
-        # return {
-        #     'view_type': 'form',
-        #     'view_mode': 'form',
-        #     'res_model': 'binary.operator.wizard',
-        #     'res_id': wiz.id,
-        #     'type': 'ir.actions.act_window',
-        #     'target': 'new',
-        #     'context': {'generator_id': False, 'stringconverter': self.id},
-        #     'nodestroy': True,
-        # }
+        if is_rule:
+            name = self.name
+            split = name.split(',')
+            model = split[0]
+            model = self.env['ir.model'].search([('model','=',model)], limit=1)
+            if model:
+                fields = split[2]
+                fields = self.env['ir.model.fields'].search([('model_id', '=', model.id),('name','=',fields)], limit=1)
+                operator = split[3]
+                operator = self.env['operators'].search([('symbol', '=', operator)], limit=1)
+                value1 = split[4]
+                self.ensure_one()
+                wiz = self.env['rule.wizard'].create({'model1':model.id,
+                                                      'fields1':fields.id,
+                                                      'operator':operator.id,
+                                                      'value1':value1})
+                return {
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'res_model': 'rule.wizard',
+                    'res_id': wiz.id,
+                    'type': 'ir.actions.act_window',
+                    'target': 'new',
+                    'context': {'generator_id': False, 'stringconverter':self.id},
+                    'nodestroy': True,
+                }
+        else:
+            import sys
+            binary_operator = self.name
+            binary_operator = self.env['binary.operators'].search([('symbol', '=', binary_operator)], limit=1)
+            if binary_operator:
+                wiz = self.env['binary.operator.wizard'].create({'operator': binary_operator.id})
 
-        pass
+                return {
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'res_model': 'binary.operator.wizard',
+                    'res_id': wiz.id,
+                    'type': 'ir.actions.act_window',
+                    'target': 'new',
+                    'context': {'generator_id': False, 'stringconverter': self.id},
+                    'nodestroy': True,
+                }
+
+

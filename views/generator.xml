@@ -35,12 +35,8 @@
                       <field name="sequence" widget="handle"/>
                       <field name="is_rule" invisible="1"/>
                       <field name="name" readonly="1"/>
-                      <button name="edit_rule" string="Editar Regla" class="oe_link" type="object"
-                              options='{"no_open": True, "no_create": True}'
-                              attrs="{'invisible': [('is_rule', '=', False)]}"/>
-                      <button name="edit_operator" string="Editar Operador" class="oe_link" type="object"
-                              options='{"no_open": True, "no_create": True}'
-                              attrs="{'invisible': [('is_rule', '=', True)]}"/>
+                      <button name="edit" string="Editar" class="oe_link" type="object"
+                              options='{"no_open": True, "no_create": True}'/>
                     </tree>
                     <form string="Regla">
                       <field name="name" readonly="1" nolabel="1"/>
