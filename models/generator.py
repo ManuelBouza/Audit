@@ -25,8 +25,8 @@ class Generator(models.Model):
     def add_rule(self):
         # stringConverter = self.env['string.converter'].create({'generator_id':self.id,'name':'hytg'})
 
-        self.ensure_one()
-        wiz = self.env['rule.wizard'].create({})
+        self.ensure_one() # asegurarce que solo sea un solo record del modelo.
+        wiz = self.env['rule.wizard'].create({}) #Creando lo que va ha mostrar el wiard
         return {
             'view_type': 'form',
             'view_mode': 'form',
@@ -37,7 +37,23 @@ class Generator(models.Model):
             'context': {'generator_id': self.id},
             'nodestroy': True,
         }
+
+    @api.multi
+    def add_operator(self):
+
+        wiz = self.env['binary.operator.wizard'].create({}) #Creando lo que va ha mostrar el wiard
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'binary.operator.wizard',
+            'res_id': wiz.id,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'context': {'generator_id': self.id},
+            'nodestroy': True,
+        }
         pass
+
 
 class Operators(models.Model):
     _name = 'operators'
@@ -45,8 +61,8 @@ class Operators(models.Model):
     name = fields.Char(string='Nombre')
     symbol = fields.Char(string='Símbolo')
 
-class OperatorsBinary(models.Model):
-    _name = 'operators.binary'
+class BinaryOperators(models.Model):
+    _name = 'binary.operators'
 
     name = fields.Char(string='Nombre')
     symbol = fields.Char(string='Símbolo')
@@ -55,15 +71,11 @@ class stringConverter(models.Model):
     _name = 'string.converter'
     _order = 'sequence'
 
-    @api.model
-    def _get_groups(self):
-        return [('a','Grupo A'),('b','Grupo B')]
-
-    generator_id = fields.Many2one(comodel_name='generator')
+    generator_id = fields.Many2one(comodel_name='generator', required=True)
     name = fields.Char(string='Nombre')
     sequence =fields.Integer('Secuencia', default=0)
-    operator_binary = fields.Many2one(comodel_name='operators.binary', string='Operador')
-    group= fields.Selection('_get_groups', string='Grupo')
+    is_rule = fields.Boolean(
+        string='Is_rule', default='True')
 
     @api.multi
     def edit_rule(self):
@@ -92,4 +104,21 @@ class stringConverter(models.Model):
                 'context': {'generator_id': False, 'stringconverter':self.id},
                 'nodestroy': True,
             }
+        pass
+
+    @api.multi
+    def edit_operator(self):
+        # name = self.name
+        #
+        # return {
+        #     'view_type': 'form',
+        #     'view_mode': 'form',
+        #     'res_model': 'binary.operator.wizard',
+        #     'res_id': wiz.id,
+        #     'type': 'ir.actions.act_window',
+        #     'target': 'new',
+        #     'context': {'generator_id': False, 'stringconverter': self.id},
+        #     'nodestroy': True,
+        # }
+
         pass

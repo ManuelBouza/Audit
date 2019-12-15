@@ -26,16 +26,21 @@
 
                 <group string="Comparaciones">
                  <button name="add_rule" string="Agregar Regla" class="oe_highlight" type="object"/>
+                 <button name="add_operator" string="Agregar Operador" class="oe_highlight" type="object"/>
                 </group>
 
                 <group string="Reglas">
                   <field name="stringConverter" options='{"no_open": True, "no_create": True}' nolabel="1">
                     <tree editable="1" create="0" delete="1">
                       <field name="sequence" widget="handle"/>
-                      <field name="group" readonly="1"/>
+                      <field name="is_rule" invisible="1"/>
                       <field name="name" readonly="1"/>
-                      <field name="operator_binary" readonly="1"/>
-                      <button name="edit_rule" string="Editar Regla" class="oe_link" type="object" options='{"no_open": True, "no_create": True}'/>
+                      <button name="edit_rule" string="Editar Regla" class="oe_link" type="object"
+                              options='{"no_open": True, "no_create": True}'
+                              attrs="{'invisible': [('is_rule', '=', False)]}"/>
+                      <button name="edit_operator" string="Editar Operador" class="oe_link" type="object"
+                              options='{"no_open": True, "no_create": True}'
+                              attrs="{'invisible': [('is_rule', '=', True)]}"/>
                     </tree>
                     <form string="Regla">
                       <field name="name" readonly="1" nolabel="1"/>

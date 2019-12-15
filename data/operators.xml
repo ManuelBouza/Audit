@@ -22,21 +22,20 @@
             <field name="symbol">&gt;=</field>
         </record>
 
-        <record id="operator_and" model="operators.binary">
+        <record id="operator_and" model="binary.operators">
             <field name="name">&amp;</field>
             <field name="symbol">&amp;</field>
         </record>
 
-        <record id="operator_or" model="operators.binary">
+        <record id="operator_or" model="binary.operators">
             <field name="name">|</field>
             <field name="symbol">|</field>
         </record>
 
-        <record id="operator_not" model="operators.binary">
+        <record id="operator_not" model="binary.operators">
             <field name="name">!</field>
             <field name="symbol">!</field>
         </record>
-
 
     </data>
 </openerp>

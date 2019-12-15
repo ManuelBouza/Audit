@@ -28,5 +28,27 @@
             </field>
         </record>
 
+
+        <record id="binary_operator_wizard_view_form" model="ir.ui.view">
+            <field name="name">binary.operator.wizard.view.form</field>
+            <field name="model">binary.operator.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Operador">
+                    <group string="Operador">
+                      <field name="operator" widget="selection"/>
+                    </group>
+                    <footer>
+                        <button name="create_operator" string="Crear Operador" type="object"
+                            icon="gtk-apply" invisible="not context.get('generator_id')"/>
+                         <button name="edit_operator" string="Editar Operador" type="object"
+                            icon="gtk-apply" invisible="context.get('generator_id')"/>
+                        or
+                        <button special="cancel" string="Cancel" type="object"
+                            icon="gtk-cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
     </data>
 </openerp>
