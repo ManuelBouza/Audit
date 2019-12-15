@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="wizard_view_form" model="ir.ui.view">
+            <field name="name">rule.wizard.view.form</field>
+            <field name="model">rule.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Regla">
+                    <group string="Modelos">
+                      <field name="model1" widget="selection"/>
+                    </group>
+                    <group string="Comparaciones">
+                      <field name="fields1" widget="selection" domain="[('model_id', '=', model1)]"/>
+                      <field name="operator" widget="selection"/>
+                      <field name="value1" />
+                    </group>
+                    <footer>
+                        <button name="create_rule" string="Crear Regla" type="object"
+                            icon="gtk-apply" invisible="not context.get('generator_id')"/>
+                         <button name="edit_rule" string="Editar Regla" type="object"
+                            icon="gtk-apply" invisible="context.get('generator_id')"/>
+                        or
+                        <button special="cancel" string="Cancel" type="object"
+                            icon="gtk-cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

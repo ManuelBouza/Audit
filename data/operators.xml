@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data >
+
+        <record id="operator_equal" model="operators">
+            <field name="name">Igual a</field>
+            <field name="symbol">=</field>
+        </record>
+
+        <record id="operator_no_equal" model="operators">
+            <field name="name">Diferente a</field>
+            <field name="symbol">!=</field>
+        </record>
+
+        <record id="operator_less_than" model="operators">
+            <field name="name">Menor que</field>
+            <field name="symbol">&lt;=</field>
+        </record>
+
+        <record id="operator_more_than" model="operators">
+            <field name="name">Mayor que</field>
+            <field name="symbol">&gt;=</field>
+        </record>
+
+        <record id="operator_and" model="operators.binary">
+            <field name="name">&amp;</field>
+            <field name="symbol">&amp;</field>
+        </record>
+
+        <record id="operator_or" model="operators.binary">
+            <field name="name">|</field>
+            <field name="symbol">|</field>
+        </record>
+
+        <record id="operator_not" model="operators.binary">
+            <field name="name">!</field>
+            <field name="symbol">!</field>
+        </record>
+
+
+    </data>
+</openerp>
