@@ -15,7 +15,7 @@ class RuleWizard(models.TransientModel):
     # Operador entre los campos
     operator = fields.Many2one(comodel_name='operators', string='Operador 1')
 
-    # Campo 1 de la restriccion 1
+    # Campo 1 de la restricción 1
     value1 = fields.Char()
 
     date_value = fields.Date(
