@@ -26,8 +26,8 @@ class RuleWizard(models.TransientModel):
         string='Date_time_value',
         required=False)
 
-    interger_value = fields.Integer(
-        string='Interger_value',
+    integer_value = fields.Integer(
+        string='integer_value',
         required=False)
 
     bool_value = fields.Boolean(
@@ -42,21 +42,18 @@ class RuleWizard(models.TransientModel):
         string='Float_value',
         required=False)
 
-
     @api.onchange('fields1')
     def onchange_method(self):
         self.value1 = self.fields1.ttype
 
-
-
-
     @api.multi
-    def create_rule(self):  #para crear la regla, necesito recibir en el context el generator id para le realcion entre many2one
+    def create_rule(
+            self):  # para crear la regla, necesito recibir en el context el generator id para le realcion entre many2one
         context = self.env.context
         if context and context.get('generator_id', False):
             generator_id = context.get('generator_id')
             generator_id = int(generator_id)
-            name = self.model1.model+', ' + self.fields1.name + ', ' + self.operator.symbol+ ', ' + self.value1
+            name = self.model1.model + ', ' + self.fields1.name + ', ' + self.operator.symbol + ', ' + self.value1
             self.env['string.converter'].create({
                 'generator_id': generator_id,
                 'name': name,
@@ -71,8 +68,9 @@ class RuleWizard(models.TransientModel):
             stringconverter = context.get('stringconverter')
             stringconverter = int(stringconverter)
 
-            name = self.model1.model+', ' + self.fields1.name + ', ' + self.operator.symbol+ ', ' + self.value1
+            name = self.model1.model + ', ' + self.fields1.name + ', ' + self.operator.symbol + ', ' + self.value1
             self.env['string.converter'].browse(stringconverter).write({'name': name})
+
 
 class BinaryOperatorWizard(models.TransientModel):
     _name = "binary.operator.wizard"
@@ -80,9 +78,10 @@ class BinaryOperatorWizard(models.TransientModel):
     # Operator
     operator = fields.Many2one(comodel_name='binary.operators', string='Operador')
 
-    #TODO Refactorizar la funcion de create y de converter
+    # TODO Refactorizar la función de create y de converter
     @api.multi
-    def create_operator(self):  #para crear la regla, necesito recibir en el context el generator id para le realcion entre many2one
+    def create_operator(
+            self):  # para crear la regla, necesito recibir en el context el generator id para le realcion entre many2one
         context = self.env.context
         if context and context.get('generator_id', False):
             generator_id = context.get('generator_id')

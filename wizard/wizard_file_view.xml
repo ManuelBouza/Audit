@@ -16,7 +16,7 @@
                       <field name="value1"  />
                       <field name="date_value" attrs="{'invisible': [('value1', '!=', 'date')]}" />
                       <field name="date_time_value"  attrs="{'invisible': [('value1', '!=', 'datetime')]}"/>
-                      <field name="interger_value"  attrs="{'invisible': [('value1', '!=', 'integer')]}"/>
+                      <field name="integer_value"  attrs="{'invisible': [('value1', '!=', 'integer')]}"/>
                       <field name="bool_value"  attrs="{'invisible': [('value1', '!=', 'boolean')]}"/>
                       <field name="char_value"  attrs="{'invisible': [('value1', '!=', 'char')]}"/>
                       <field name="float_value" attrs="{'invisible': [('value1', '!=', 'float')]}" />
