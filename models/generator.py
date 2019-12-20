@@ -6,11 +6,21 @@ from openerp import models, fields, api
 class Generator(models.Model):
     _name = 'generator'
 
-    stringConverter = fields.One2many(comodel_name='string.converter', inverse_name='generator_id', string='Regla')
+    name = fields.Char(
+        string='Nombre',
+        required=False)
+
+    description = fields.Text(
+        string="Descripción",
+        required=False)
+
+    stringConverter = fields.One2many(
+        comodel_name='string.converter',
+        inverse_name='generator_id',
+        string='Regla')
 
     @api.multi
     def validate_rule(self):
-
         pass
         # tables = self.model1.model
         # tables = tables.split(".")
@@ -25,8 +35,8 @@ class Generator(models.Model):
     def add_rule(self):
         # stringConverter = self.env['string.converter'].create({'generator_id':self.id,'name':'hytg'})
 
-        self.ensure_one() # asegurarce que solo sea un solo record del modelo.
-        wiz = self.env['rule.wizard'].create({}) #Creando lo que va ha mostrar el wiard
+        self.ensure_one()  # asegurarce que solo sea un solo record del modelo.
+        wiz = self.env['rule.wizard'].create({})  # Creando lo que va ha mostrar el wiard
         return {
             'view_type': 'form',
             'view_mode': 'form',
@@ -40,8 +50,7 @@ class Generator(models.Model):
 
     @api.multi
     def add_operator(self):
-
-        wiz = self.env['binary.operator.wizard'].create({}) #Creando lo que va ha mostrar el wiard
+        wiz = self.env['binary.operator.wizard'].create({})  # Creando lo que va ha mostrar el wiard
         return {
             'view_type': 'form',
             'view_mode': 'form',
@@ -61,11 +70,13 @@ class Operators(models.Model):
     name = fields.Char(string='Nombre')
     symbol = fields.Char(string='Símbolo')
 
+
 class BinaryOperators(models.Model):
     _name = 'binary.operators'
 
     name = fields.Char(string='Nombre')
     symbol = fields.Char(string='Símbolo')
+
 
 class stringConverter(models.Model):
     _name = 'string.converter'
@@ -73,7 +84,7 @@ class stringConverter(models.Model):
 
     generator_id = fields.Many2one(comodel_name='generator', required=True, ondelete='cascade')
     name = fields.Char(string='Nombre')
-    sequence =fields.Integer('Secuencia', default=0)
+    sequence = fields.Integer('Secuencia', default=0)
     is_rule = fields.Boolean(string='Is_rule', default='True')
 
     @api.multi
@@ -84,18 +95,19 @@ class stringConverter(models.Model):
             name = self.name
             split = name.split(', ')
             model = split[0]
-            model = self.env['ir.model'].search([('model','=',model)], limit=1)
+            model = self.env['ir.model'].search([('model', '=', model)], limit=1)
             if model:
                 fields = split[1]
-                fields = self.env['ir.model.fields'].search([('model_id', '=', model.id),('name','=',fields)], limit=1)
+                fields = self.env['ir.model.fields'].search([('model_id', '=', model.id), ('name', '=', fields)],
+                                                            limit=1)
                 operator = split[2]
                 operator = self.env['operators'].search([('symbol', '=', operator)], limit=1)
                 value1 = split[3]
                 self.ensure_one()
-                wiz = self.env['rule.wizard'].create({'model1':model.id,
-                                                      'fields1':fields.id,
-                                                      'operator':operator.id,
-                                                      'value1':value1})
+                wiz = self.env['rule.wizard'].create({'model1': model.id,
+                                                      'fields1': fields.id,
+                                                      'operator': operator.id,
+                                                      'value1': value1})
                 return {
                     'view_type': 'form',
                     'view_mode': 'form',
@@ -103,7 +115,7 @@ class stringConverter(models.Model):
                     'res_id': wiz.id,
                     'type': 'ir.actions.act_window',
                     'target': 'new',
-                    'context': {'generator_id': False, 'stringconverter':self.id},
+                    'context': {'generator_id': False, 'stringconverter': self.id},
                     'nodestroy': True,
                 }
         else:
@@ -123,5 +135,3 @@ class stringConverter(models.Model):
                     'context': {'generator_id': False, 'stringconverter': self.id},
                     'nodestroy': True,
                 }
-
-

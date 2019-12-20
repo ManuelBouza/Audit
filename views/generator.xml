@@ -1,70 +1,77 @@
 <openerp>
-  <data>
-    <!-- explicit list view definition -->
+    <data>
+        <!-- explicit list view definition -->
 
-<!--    <record id="view_generator_tree_view" model="ir.ui.view">-->
-<!--      <field name="name">generator.tree.view</field>-->
-<!--      <field name="model">generator</field>-->
-<!--      <field name="arch" type="xml">-->
-<!--        <tree>-->
-<!--          <field name="model1"/>-->
-<!--          <field name="fields1"/>-->
-<!--          <field name="operator"/>-->
-<!--        </tree>-->
-<!--      </field>-->
-<!--    </record>-->
+        <!--    <record id="view_generator_tree_view" model="ir.ui.view">-->
+        <!--      <field name="name">generator.tree.view</field>-->
+        <!--      <field name="model">generator</field>-->
+        <!--      <field name="arch" type="xml">-->
+        <!--        <tree>-->
+        <!--          <field name="model1"/>-->
+        <!--          <field name="fields1"/>-->
+        <!--          <field name="operator"/>-->
+        <!--        </tree>-->
+        <!--      </field>-->
+        <!--    </record>-->
 
-    <record id="view_generator_form_view" model="ir.ui.view">
-        <field name="name">generator.form.view</field>
-        <field name="model">generator</field>
-        <field name="arch" type="xml">
-            <form >
-              <header>
-                  <button string="Validar" type="object" name="validate_rule" class="oe_highlight"/>
-              </header>
-              <sheet>
+        <record id="view_generator_form_view" model="ir.ui.view">
+            <field name="name">generator.form.view</field>
+            <field name="model">generator</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Validar"
+                                type="object"
+                                name="validate_rule"
+                                class="oe_highlight"/>
+                    </header>
+                    <sheet>
 
-                <group string="Comparaciones">
-                 <button name="add_rule" string="Agregar Regla" class="oe_highlight" type="object"/>
-                 <button name="add_operator" string="Agregar Operador" class="oe_highlight" type="object"/>
-                </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
 
-                <group string="Reglas">
-                  <field name="stringConverter" options='{"no_open": True, "no_create": True}' nolabel="1">
-                    <tree editable="1" create="0" delete="1">
-                      <field name="sequence" widget="handle"/>
-                      <field name="is_rule" invisible="1"/>
-                      <field name="name" readonly="1"/>
-                      <button name="edit" string="Editar" class="oe_link" type="object"
-                              options='{"no_open": True, "no_create": True}'/>
-                    </tree>
-                    <form string="Regla">
-                      <field name="name" readonly="1" nolabel="1"/>
-                    </form>
-                  </field>
-                </group>
+                        <group>
+                            <button name="add_rule" string="Agregar Regla" class="oe_highlight" type="object"/>
+                            <button name="add_operator" string="Agregar Operador" class="oe_highlight" type="object"/>
+                        </group>
 
-              </sheet>
-            </form>
-        </field>
-    </record>
+                        <group string="Reglas">
+                            <field name="stringConverter" options='{"no_open": True, "no_create": True}' nolabel="1">
+                                <tree editable="1" create="0" delete="1">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="is_rule" invisible="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <button name="edit" string="Editar" class="oe_link" type="object"
+                                            options='{"no_open": True, "no_create": True}'/>
+                                </tree>
+                                <form string="Regla">
+                                    <field name="name" readonly="1" nolabel="1"/>
+                                </form>
+                            </field>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
 
+        <record id="generator_action_window" model="ir.actions.act_window">
+            <field name="name">Generador de Reglas</field>
+            <field name="res_model">generator</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
+        <!-- Top menu item -->
 
-    <record id="generator_action_window" model="ir.actions.act_window">
-      <field name="name">Generador de Reglas</field>
-      <field name="res_model">generator</field>
-      <field name="view_mode">tree,form</field>
-    </record>
+        <menuitem name="Auditoria" id="audit_menu_root" sequence="1000"/>
 
-    <!-- Top menu item -->
+        <!-- menu categories -->
 
-    <menuitem name="Auditoria" id="audit_menu_root" sequence="1000"/>
+        <menuitem name="Generador" id="generator_menu" parent="audit.audit_menu_root"
+                  action="audit.generator_action_window" sequence="0"/>
 
-    <!-- menu categories -->
-
-    <menuitem name="Generador" id="generator_menu" parent="audit.audit_menu_root" action="audit.generator_action_window" sequence="0" />
-
-  </data>
+    </data>
 </openerp>
